@@ -1,0 +1,88 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <script>
+        var Painter = function (width, height) {
+            this.context = function () {
+                var canvas = document.createElement('canvas');
+                document.body.append(canvas);
+                canvas.width = width;
+                canvas.height = height;
+
+                return canvas.getContext('2d');
+            }()
+        }
+
+        Painter.prototype.clear = function () {
+            this.context.clearRect(0, 0, painter.context.canvas.width, painter.context.canvas.height);
+        }
+
+        /**
+         * @param {Eye} eye
+         */
+        Painter.prototype.paintSprite = function (sprite) {
+            var column = sprite.currentIndex % sprite.numberOfColumns;
+            var row = Math.floor(sprite.currentIndex / sprite.numberOfColumns);
+
+            var sx = column * sprite.frameWidth,
+                sy = row * sprite.frameHeight,
+                sWidth = sprite.frameWidth,
+                sHeight = sprite.frameHeight,
+                dx = 0,
+                dy = 0,
+                dWidth = 300,
+                dHeight = 300;
+
+            this.context.drawImage(sprite.image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight);
+            var x = 5;
+        }
+
+        var Sprite = function (width, height, frameWidth, frameHeight, image) {
+            this.width = width;
+            this.height = height;
+            this.frameWidth = frameWidth;
+            this.frameHeight = frameHeight;
+            this.currentIndex = 0;
+            this.numberOfRows = this.height / this.frameHeight;
+            this.numberOfColumns = this.width / this.frameWidth;
+            this.image = image;
+            this.numberOfFrames = this.numberOfColumns * this.numberOfRows;
+        }
+
+        Sprite.prototype.update = function () {
+            if (this.currentIndex == this.numberOfFrames - 1) {
+                this.currentIndex = 0;
+            } else {
+                this.currentIndex++;
+            }
+        }
+
+        var painter = new Painter(window.innerWidth, innerHeight);
+        var image = new Image();
+        image.src = 'walk.png';
+
+        sprite = new Sprite(1950, 3500, 650, 700, image);
+
+        var loops = 0;
+        var loopsPerFrame = 15;
+
+
+        var loop = function () {
+            painter.clear();
+            painter.paintSprite(sprite);
+            if (loops == loopsPerFrame) {
+                loops = 0;
+                sprite.update();
+            }
+            loops++;
+        }
+        image.onload = function () {
+            setInterval(loop, 1000 / 800);
+        }
+    </script>
+</body>
+
+</html>
