@@ -9,4 +9,4 @@ Very very quick play around with canvas animations using sprites out of curiosit
 
 ## The result
 
-![animation](./img/walk.png)
+![animation](./img/canvas_sprite_animation.gif)
