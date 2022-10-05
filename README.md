@@ -6,3 +6,7 @@ Very very quick play around with canvas animations using sprites out of curiosit
 
 - Clone the repository
 - Open index.html in a browser
+
+## The result
+
+![animation](./img/walk.png)
